@@ -22,9 +22,9 @@ export class GamesRepository implements IGamesRepository {
   }
 
   async findUsersByGameId(id: string): Promise<User[]> {
-    return []
-    // return this.repository
-    //   .createQueryBuilder()
+    const game = await this.repository.createQueryBuilder("games").leftJoinAndSelect("games.users", "users").where("games.id = :id", { id }).getOne(); // you can use just category id as well
+
+    return game?.users as User[]
       // Complete usando query builder
   }
 }
